@@ -6,7 +6,7 @@ import com.aditya.recyclerviewcentered.feature.view.CenterLayoutManager;
 
 public class ScaleTransformer implements CenterLayoutManager.ItemTransformer {
 
-    private static final String TAG = "CurveTransformer";
+    private static final String TAG = "ScaleTransformer";
 
 
     @Override
