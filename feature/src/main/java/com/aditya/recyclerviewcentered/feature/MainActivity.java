@@ -1,21 +1,13 @@
 package com.aditya.recyclerviewcentered.feature;
 
-import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aditya.recyclerviewcentered.feature.adapter.DemoAdapter;
-import com.aditya.recyclerviewcentered.feature.adapter.ImageCardAdapter;
-import com.aditya.recyclerviewcentered.feature.impl.CurveTransformer;
 import com.aditya.recyclerviewcentered.feature.impl.ScaleTransformer;
-import com.aditya.recyclerviewcentered.feature.util.BitmapUtils;
-import com.aditya.recyclerviewcentered.feature.view.FlingRecycleView;
 import com.aditya.recyclerviewcentered.feature.view.GalleryLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
