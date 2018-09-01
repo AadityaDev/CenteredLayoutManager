@@ -114,9 +114,6 @@ public class DemoAdapter extends RecyclerView.Adapter<DemoAdapter.ViewHolder> im
         }
     }
 
-    /**
-     * @author chensuilun
-     */
     protected static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView text;
 
@@ -126,9 +123,6 @@ public class DemoAdapter extends RecyclerView.Adapter<DemoAdapter.ViewHolder> im
         }
     }
 
-    /**
-     * @author chensuilun
-     */
     public interface OnItemClickListener {
 
         void onItemClick(View view, int position);

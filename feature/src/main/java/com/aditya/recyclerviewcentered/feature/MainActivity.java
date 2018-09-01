@@ -8,13 +8,15 @@ import android.view.ViewGroup;
 
 import com.aditya.recyclerviewcentered.feature.adapter.DemoAdapter;
 import com.aditya.recyclerviewcentered.feature.impl.ScaleTransformer;
-import com.aditya.recyclerviewcentered.feature.view.GalleryLayoutManager;
+import com.aditya.recyclerviewcentered.feature.view.CenterLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private CenterLayoutManager layoutManager1;
+    private DemoAdapter demoAdapter1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < size; i++) {
             title.add("Hello" + i);
         }
-        GalleryLayoutManager layoutManager1 = new GalleryLayoutManager(GalleryLayoutManager.HORIZONTAL);
+        layoutManager1 = new CenterLayoutManager(CenterLayoutManager.HORIZONTAL);
         layoutManager1.attach(recyclerView, 0);
         layoutManager1.setItemTransformer(new ScaleTransformer());
-        DemoAdapter demoAdapter1 = new DemoAdapter(title) {
+        demoAdapter1 = new DemoAdapter(title) {
             @Override
             public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 return super.onCreateViewHolder(parent, viewType);

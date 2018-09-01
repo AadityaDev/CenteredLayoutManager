@@ -2,16 +2,16 @@ package com.aditya.recyclerviewcentered.feature.impl;
 
 import android.view.View;
 
-import com.aditya.recyclerviewcentered.feature.view.GalleryLayoutManager;
+import com.aditya.recyclerviewcentered.feature.view.CenterLayoutManager;
 
-public class CurveTransformer implements GalleryLayoutManager.ItemTransformer {
+public class CurveTransformer implements CenterLayoutManager.ItemTransformer {
     public static final int ROTATE_ANGEL = 7;
     private static final String TAG = "CurveTransformer";
 
 
     @Override
-    public void transformItem(GalleryLayoutManager layoutManager, View item, float fraction) {
-        if (layoutManager.getOrientation() == GalleryLayoutManager.VERTICAL) {
+    public void transformItem(CenterLayoutManager layoutManager, View item, float fraction) {
+        if (layoutManager.getOrientation() == CenterLayoutManager.VERTICAL) {
             return;
         }
         int width = item.getWidth();

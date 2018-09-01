@@ -17,8 +17,8 @@ import com.aditya.recyclerviewcentered.BuildConfig;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
-public class GalleryLayoutManager extends RecyclerView.LayoutManager implements RecyclerView.SmoothScroller.ScrollVectorProvider {
-    private static final String TAG = "GalleryLayoutManager";
+public class CenterLayoutManager extends RecyclerView.LayoutManager implements RecyclerView.SmoothScroller.ScrollVectorProvider {
+    private static final String TAG = "Centered";
     final static int LAYOUT_START = -1;
 
     final static int LAYOUT_END = 1;
@@ -53,7 +53,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
     private OrientationHelper mHorizontalHelper;
     private OrientationHelper mVerticalHelper;
 
-    public GalleryLayoutManager(int orientation) {
+    public CenterLayoutManager(int orientation) {
         mOrientation = orientation;
     }
 
@@ -68,11 +68,11 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
     @Override
     public RecyclerView.LayoutParams generateDefaultLayoutParams() {
         if (mOrientation == VERTICAL) {
-            return new GalleryLayoutManager.LayoutParams(
+            return new CenterLayoutManager.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
         } else {
-            return new GalleryLayoutManager.LayoutParams(
+            return new CenterLayoutManager.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
         }
@@ -169,12 +169,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         mInnerScrollListener.onScrolled(mRecyclerView, 0, 0);
     }
 
-    /**
-     * Layout the item view witch position specified by {@link GalleryLayoutManager#mInitialSelectedPosition} first and then layout the other
-     *
-     * @param recycler
-     * @param state
-     */
     private void firstFillWithHorizontal(RecyclerView.Recycler recycler, RecyclerView.State state) {
         detachAndScrapAttachedViews(recycler);
         int leftEdge = getOrientationHelper().getStartAfterPadding();
@@ -213,12 +207,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         super.onItemsRemoved(recyclerView, positionStart, itemCount);
     }
 
-    /**
-     * Layout the item view witch position special by {@link GalleryLayoutManager#mInitialSelectedPosition} first and then layout the other
-     *
-     * @param recycler
-     * @param state
-     */
     private void firstFillWithVertical(RecyclerView.Recycler recycler, RecyclerView.State state) {
         detachAndScrapAttachedViews(recycler);
         int topEdge = getOrientationHelper().getStartAfterPadding();
@@ -252,14 +240,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         fillBottom(recycler, mInitialSelectedPosition + 1, bottomStartOffset, bottomEdge);
     }
 
-    /**
-     * Fill left of the center view
-     *
-     * @param recycler
-     * @param startPosition start position to fill left
-     * @param startOffset   layout start offset
-     * @param leftEdge
-     */
     private void fillLeft(RecyclerView.Recycler recycler, int startPosition, int startOffset, int leftEdge) {
         View scrap;
         int topOffset;
@@ -285,14 +265,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         }
     }
 
-    /**
-     * Fill right of the center view
-     *
-     * @param recycler
-     * @param startPosition start position to fill right
-     * @param startOffset   layout start offset
-     * @param rightEdge
-     */
     private void fillRight(RecyclerView.Recycler recycler, int startPosition, int startOffset, int rightEdge) {
         View scrap;
         int topOffset;
@@ -318,14 +290,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         }
     }
 
-    /**
-     * Fill top of the center view
-     *
-     * @param recycler
-     * @param startPosition start position to fill top
-     * @param startOffset   layout start offset
-     * @param topEdge       top edge of the RecycleView
-     */
     private void fillTop(RecyclerView.Recycler recycler, int startPosition, int startOffset, int topEdge) {
         View scrap;
         int leftOffset;
@@ -351,14 +315,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         }
     }
 
-    /**
-     * Fill bottom of the center view
-     *
-     * @param recycler
-     * @param startPosition start position to fill bottom
-     * @param startOffset   layout start offset
-     * @param bottomEdge    bottom edge of the RecycleView
-     */
     private void fillBottom(RecyclerView.Recycler recycler, int startPosition, int startOffset, int bottomEdge) {
         View scrap;
         int leftOffset;
@@ -408,7 +364,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
 
     private float calculateToCenterFraction(View child, float pendingOffset) {
         int distance = calculateDistanceCenter(child, pendingOffset);
-        int childLength = mOrientation == GalleryLayoutManager.HORIZONTAL ? child.getWidth() : child.getHeight();
+        int childLength = mOrientation == CenterLayoutManager.HORIZONTAL ? child.getWidth() : child.getHeight();
 
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "calculateToCenterFraction: distance:" + distance + ",childLength:" + childLength);
@@ -416,15 +372,10 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         return Math.max(-1.f, Math.min(1.f, distance * 1.f / childLength));
     }
 
-    /**
-     * @param child
-     * @param pendingOffset child view will scroll by
-     * @return
-     */
     private int calculateDistanceCenter(View child, float pendingOffset) {
         OrientationHelper orientationHelper = getOrientationHelper();
         int parentCenter = (orientationHelper.getEndAfterPadding() - orientationHelper.getStartAfterPadding()) / 2 + orientationHelper.getStartAfterPadding();
-        if (mOrientation == GalleryLayoutManager.HORIZONTAL) {
+        if (mOrientation == CenterLayoutManager.HORIZONTAL) {
             return (int) (child.getWidth() / 2 - pendingOffset + child.getLeft() - parentCenter);
         } else {
             return (int) (child.getHeight() / 2 - pendingOffset + child.getTop() - parentCenter);
@@ -432,11 +383,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
 
     }
 
-    /**
-     * @param recycler
-     * @param state
-     * @param dy
-     */
     private void fillWithVertical(RecyclerView.Recycler recycler, RecyclerView.State state, int dy) {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "fillWithVertical: dy:" + dy);
@@ -550,11 +496,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         }
     }
 
-
-    /**
-     * @param recycler
-     * @param state
-     */
     private void fillWithHorizontal(RecyclerView.Recycler recycler, RecyclerView.State state, int dx) {
         int leftEdge = getOrientationHelper().getStartAfterPadding();
         int rightEdge = getOrientationHelper().getEndAfterPadding();
@@ -708,9 +649,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         return outVector;
     }
 
-    /**
-     * @author chensuilun
-     */
+
     class State {
         /**
          * Record all item view 's last position after last layout
@@ -816,9 +755,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         }
     }
 
-    /**
-     * @author chensuilun
-     */
+
     public static class LayoutParams extends RecyclerView.LayoutParams {
 
         public LayoutParams(Context c, AttributeSet attrs) {
@@ -850,11 +787,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         mItemTransformer = itemTransformer;
     }
 
-    /**
-     * A ItemTransformer is invoked whenever a attached item is scrolled.
-     * This offers an opportunity for the application to apply a custom transformation
-     * to the item views using animation properties.
-     */
     public interface ItemTransformer {
 
         /**
@@ -866,14 +798,9 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
          *                      0 is front and center. 1 is one full
          *                      page position to the right, and -1 is one page position to the left.
          */
-        void transformItem(GalleryLayoutManager layoutManager, View item, float fraction);
+        void transformItem(CenterLayoutManager layoutManager, View item, float fraction);
     }
 
-    /**
-     * Listen for changes to the selected item
-     *
-     * @author chensuilun
-     */
     public interface OnItemSelectedListener {
         /**
          * @param recyclerView The RecyclerView which item view belong to.
@@ -918,7 +845,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
     /**
      * Inner Listener to listen for changes to the selected item
      *
-     * @author chensuilun
      */
     private class InnerScrollListener extends RecyclerView.OnScrollListener {
         int mState;
@@ -994,9 +920,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
         startSmoothScroll(linearSmoothScroller);
     }
 
-    /**
-     * Implement to support {@link GalleryLayoutManager#smoothScrollToPosition(RecyclerView, RecyclerView.State, int)}
-     */
     private class GallerySmoothScroller extends LinearSmoothScroller {
 
         public GallerySmoothScroller(Context context) {
@@ -1024,12 +947,6 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager implements 
             return containerCenter - childCenter;
         }
 
-        /**
-         * Calculates the vertical scroll amount necessary to make the given view in center of the RecycleView
-         *
-         * @param view The view which we want to make in center of the RecycleView
-         * @return The vertical scroll amount necessary to make the view in center of the RecycleView
-         */
         public int calculateDyToMakeCentral(View view) {
             final RecyclerView.LayoutManager layoutManager = getLayoutManager();
             if (layoutManager == null || !layoutManager.canScrollVertically()) {
